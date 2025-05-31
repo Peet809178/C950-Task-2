@@ -67,9 +67,6 @@ def deliver_packages(truck, pkg_table, dist_matrix, address_list):
         for pkg_id in truck.package_ids:
             pkg = pkg_table.lookup(pkg_id)
 
-            if pkg.package_id == 9 and current_time < datetime.strptime("10:20", "%H:%M"):
-                continue
-
             destination_index = get_address_index(pkg.address, address_list)
             if destination_index is None or current_location_index is None:
                 continue
@@ -102,10 +99,10 @@ def main():
 
     hub = "4001 South 700 East"
     depart = datetime.strptime("08:00", "%H:%M")
-
     truck1 = Truck(18, 0.0, hub, [1, 3, 6, 13, 15], depart)
     truck2 = Truck(18, 0.0, hub, [2, 4, 7, 8, 14], depart)
-    truck3 = Truck(18, 0.0, hub, [5, 9, 10, 11, 12], depart)
+    truck3_depart = datetime.strptime("10:20", "%H:%M")
+    truck3 = Truck(18, 0.0, hub, [5, 9, 10, 11, 12], truck3_depart)
 
     for truck in (truck1, truck2, truck3):
         deliver_packages(truck, pkg_table, dist_matrix, address_list)
